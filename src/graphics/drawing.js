@@ -1616,14 +1616,17 @@ FiercePlanet.Drawing = FiercePlanet.Drawing || {};
      * Update the scoreboard
      */
     this.drawScoreboard = function() {
-        this.drawWorld();
-    //    FiercePlanet.drawProfileClass();
-        this.drawScore();
-        this.drawHighestScore();
-        this.drawWaves();
-        this.drawSaved();
-        this.drawExpired();
-        this.drawResourcesInStore();
+        try {
+            this.drawWorld();
+            //    FiercePlanet.drawProfileClass();
+            this.drawScore();
+            this.drawHighestScore();
+            this.drawWaves();
+            this.drawSaved();
+            this.drawExpired();
+            this.drawResourcesInStore();
+        }
+        catch (e) {}
     };
 
 
