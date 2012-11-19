@@ -141,22 +141,24 @@ FiercePlanet.Graph = FiercePlanet.Graph || {};
      * Clears the default graph
      */
     this.setupData = function() {
-        if (plotIntervalId)
-            clearTimeout(plotIntervalId);
-        var options = {
-            series: { shadowSize: 0 }, // drawing is faster without shadows
-            yaxis: { min: 0, max: 100 },
-			legend: {
-				position: "sw"
-			}
-        };
-        var seedData = [];
-        var arguments = FiercePlanet.Graph.setupData.arguments;
-        for (var i = 0, l = arguments.length; i < l; i++) {
-            var line = arguments[i];
-            seedData.push({ label: line.label, color: line.color, data: [[0, 0] ], lines: { show: true } });
+        if ($("#world-graph")[0]) {
+            if (plotIntervalId)
+                clearTimeout(plotIntervalId);
+            var options = {
+                series: { shadowSize: 0 }, // drawing is faster without shadows
+                yaxis: { min: 0, max: 100 },
+                legend: {
+                    position: "sw"
+                }
+            };
+            var seedData = [];
+            var arguments = FiercePlanet.Graph.setupData.arguments;
+            for (var i = 0, l = arguments.length; i < l; i++) {
+                var line = arguments[i];
+                seedData.push({ label: line.label, color: line.color, data: [[0, 0] ], lines: { show: true } });
+            }
+            FiercePlanet.Graph.plot = $.plot($("#world-graph"), seedData, options);
         }
-        FiercePlanet.Graph.plot = $.plot($("#world-graph"), seedData, options);
     };
 
     /**

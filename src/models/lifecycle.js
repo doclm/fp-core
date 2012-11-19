@@ -397,7 +397,7 @@ var Lifecycle = Lifecycle || {};
     this._initialiseGame = function () {
 		if (this.preInitialiseGameCallback)
 			this.preInitialiseGameCallback();
-			
+
         if (typeof console != "undefined")
             console.log("Initialising Universe...");
 

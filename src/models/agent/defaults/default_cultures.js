@@ -112,6 +112,10 @@ _.extend(DefaultCultures.Stickman, {
 //        var sf = new FiercePlanet.StickFigure(x, y, width, height, true);
 
         var sf = new StickFigure(x, y, width, height, true);
+
+        // Copy down the style for this figure
+        sf.style = this.style;
+
         if (!_.isUndefined(agent.culture.customStickFunction)) {
             sf.defaultAction = eval(agent.culture.customStickFunction);
         }
