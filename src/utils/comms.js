@@ -110,70 +110,76 @@ FiercePlanet.Comms = FiercePlanet.Comms || {};
 }).apply(FiercePlanet.Comms);
 
 
+try {
+    var socket = io.connect();
 
-var socket = io.connect();
-
-socket.on('connect', function () {
-    var nickname = FiercePlanet.Game.currentProfile.nickname || 'anonymous';
-    socket.emit('nickname', nickname, function (alreadySet) {
-      if (!alreadySet) {
-          FiercePlanet.Comms.message('');
-      }
+    socket.on('connect', function () {
+        var nickname = FiercePlanet.Game.currentProfile.nickname || 'anonymous';
+        socket.emit('nickname', nickname, function (alreadySet) {
+            if (!alreadySet) {
+                FiercePlanet.Comms.message('');
+            }
+        });
     });
-});
 
-socket.on('announcement', function (msg) {
-    FiercePlanet.Comms.message(msg);
-});
+    socket.on('announcement', function (msg) {
+        FiercePlanet.Comms.message(msg);
+    });
 
-socket.on('nicknames', function (nicknames) {
-    FiercePlanet.Comms.message(nicknames);
-});
+    socket.on('nicknames', function (nicknames) {
+        FiercePlanet.Comms.message(nicknames);
+    });
 
-socket.on('user message', FiercePlanet.Comms.message);
-socket.on('reconnect', function () {
-    FiercePlanet.Comms.message('Reconnected to the server');
-});
+    socket.on('user message', FiercePlanet.Comms.message);
+    socket.on('reconnect', function () {
+        FiercePlanet.Comms.message('Reconnected to the server');
+    });
 
-socket.on('reconnecting', function () {
-    FiercePlanet.Comms.message('Attempting to re-connect to the server');
-});
+    socket.on('reconnecting', function () {
+        FiercePlanet.Comms.message('Attempting to re-connect to the server');
+    });
 
-socket.on('error', function (e) {
-  FiercePlanet.Comms.message('System', e ? e : 'A unknown error occurred');
-});
-socket.on('lifecycle event', function (nickname, eventType, data) {
-  FiercePlanet.Comms.receiveServerEvent(nickname, eventType, data);
-});
+    socket.on('error', function (e) {
+        FiercePlanet.Comms.message('System', e ? e : 'A unknown error occurred');
+    });
+    socket.on('lifecycle event', function (nickname, eventType, data) {
+        FiercePlanet.Comms.receiveServerEvent(nickname, eventType, data);
+    });
 
 
+
+
+}
+catch (e) {
+
+}
 
 
 //  CUT  ///////////////////////////////////////////////////////////////////
 /* This license and copyright apply to all code until the next "CUT"
-http://github.com/jherdman/javascript-relative-time-helpers/
+ http://github.com/jherdman/javascript-relative-time-helpers/
 
-The MIT License
+ The MIT License
 
-Copyright (c) 2009 James F. Herdman
+ Copyright (c) 2009 James F. Herdman
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-of the Software, and to permit persons to whom the Software is furnished to do
-so, subject to the following conditions:
+ Permission is hereby granted, free of charge, to any person obtaining a copy of
+ this software and associated documentation files (the "Software"), to deal in
+ the Software without restriction, including without limitation the rights to
+ use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+ of the Software, and to permit persons to whom the Software is furnished to do
+ so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
 
 
  * Returns a description of this past date in relative terms.
@@ -198,42 +204,42 @@ SOFTWARE.
  *
  */
 Date.prototype.toRelativeTime = function(now_threshold) {
-  var delta = new Date() - this;
+    var delta = new Date() - this;
 
-  now_threshold = parseInt(now_threshold, 10);
+    now_threshold = parseInt(now_threshold, 10);
 
-  if (isNaN(now_threshold)) {
-    now_threshold = 0;
-  }
-
-  if (delta <= now_threshold) {
-    return 'Just now';
-  }
-
-  var units = null;
-  var conversions = {
-    millisecond: 1, // ms    -> ms
-    second: 1000,   // ms    -> sec
-    minute: 60,     // sec   -> min
-    hour:   60,     // min   -> hour
-    day:    24,     // hour  -> day
-    month:  30,     // day   -> month (roughly)
-    year:   12      // month -> year
-  };
-
-  for (var key in conversions) {
-    if (delta < conversions[key]) {
-      break;
-    } else {
-      units = key; // keeps track of the selected key over the iteration
-      delta = delta / conversions[key];
+    if (isNaN(now_threshold)) {
+        now_threshold = 0;
     }
-  }
 
-  // pluralize a unit when the difference is greater than 1.
-  delta = Math.floor(delta);
-  if (delta !== 1) { units += "s"; }
-  return [delta, units].join(" ");
+    if (delta <= now_threshold) {
+        return 'Just now';
+    }
+
+    var units = null;
+    var conversions = {
+        millisecond: 1, // ms    -> ms
+        second: 1000,   // ms    -> sec
+        minute: 60,     // sec   -> min
+        hour:   60,     // min   -> hour
+        day:    24,     // hour  -> day
+        month:  30,     // day   -> month (roughly)
+        year:   12      // month -> year
+    };
+
+    for (var key in conversions) {
+        if (delta < conversions[key]) {
+            break;
+        } else {
+            units = key; // keeps track of the selected key over the iteration
+            delta = delta / conversions[key];
+        }
+    }
+
+    // pluralize a unit when the difference is greater than 1.
+    delta = Math.floor(delta);
+    if (delta !== 1) { units += "s"; }
+    return [delta, units].join(" ");
 };
 
 /*
@@ -241,7 +247,7 @@ Date.prototype.toRelativeTime = function(now_threshold) {
  * representation of a Date, and want back a date object.
  */
 Date.fromString = function(str) {
-  return new Date(Date.parse(str));
+    return new Date(Date.parse(str));
 };
 
 //  CUT  ///////////////////////////////////////////////////////////////////
