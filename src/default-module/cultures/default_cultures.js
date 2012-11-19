@@ -7,7 +7,6 @@
 
 
 
-
 var DefaultCultures = DefaultCultures || {};
 
 DefaultCultures.Circular = new Culture("Circular", one.color("#000"));
