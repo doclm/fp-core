@@ -93,6 +93,7 @@ _.extend(DefaultCultures.Stickman, {
 
 
 
+
 //        var sf = new StickFigure(x, y, width, height, true);
 //        if (agent.figure)
 //            sf.frame = agent.figure.frame;
