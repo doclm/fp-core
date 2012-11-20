@@ -93,12 +93,14 @@ _.extend(DefaultCultures.Stickman, {
 
 
 
-        var sf = new StickFigure(x, y, width, height, true);
-//        var sf = agent.figure || new StickFigure(x, y, width, height, true);
+//        var sf = new StickFigure(x, y, width, height, true);
+//        if (agent.figure)
+//            sf.frame = agent.figure.frame;
+        var sf = agent.figure || new StickFigure(x, y, width, height, true);
         sf.x = x, sf.y = y;
-
+        sf.generateDimensions();
         // Copy down the style for this figure
-        sf.style = this.style;
+        sf.style = agent.culture.style;
 
         if (!_.isUndefined(agent.culture.customStickFunction)) {
             sf.defaultAction = eval(agent.culture.customStickFunction);
@@ -131,9 +133,10 @@ _.extend(DefaultCultures.Stickman, {
 
 
         sf.direction = direction;
-        sf.frame = frame;
+//        sf.frame = frame;
         sf.doAction();
         sf.drawFigure(ctx);
+        sf.updateFrame();
         agent.figure = sf;
 
         // Now draw the figure
