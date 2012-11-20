@@ -179,7 +179,7 @@ StickFigure = function(_x, _y, _width, _height, _exaggerated) {
             , bubbleCenterY = this.headY - (this.headRadius * 2)
             , bubbleRadius = 10 * (Math.pow(textWidth / 10, 0.75));
 
-        if (direction == 1) {
+        if (this.direction == 1) {
             mouthEndX = this.headX - mouthEndX;
         }
         // save state

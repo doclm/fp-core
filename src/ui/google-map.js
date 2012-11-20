@@ -297,8 +297,13 @@ FiercePlanet.GoogleMapUtils = FiercePlanet.GoogleMapUtils || {};
      * @param value
      */
     this.createMap = function(options, altCanvasName) {
-        if (typeof(google) == 'undefined' || typeof(google.maps) == 'undefined')
+        try {
+            if (typeof(google) == 'undefined' || typeof(google.maps) == 'undefined')
+                return;
+        }
+        catch (err) {
             return;
+        }
         var canvasName = altCanvasName || '#actual_map';
 
         // If the map needs rotation, rotate the underlying div
@@ -348,8 +353,13 @@ FiercePlanet.GoogleMapUtils = FiercePlanet.GoogleMapUtils || {};
      */
     this.defaultOptions = function() {
         // If we can't reach the Google Maps API, return an empty object
-        if (typeof(google) == 'undefined' || typeof(google.maps) == 'undefined')
-            return mapOptions;
+        try {
+            if (typeof(google) == 'undefined' || typeof(google.maps) == 'undefined')
+                return {};
+        }
+        catch (err) {
+            return {};
+        }
 
       // push all mapType keys in to a mapTypeId array to set in the mapTypeControlOptions
         mapTypeIds = [

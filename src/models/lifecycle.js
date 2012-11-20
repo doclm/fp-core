@@ -470,7 +470,6 @@ var Lifecycle = Lifecycle || {};
     };
 
     this.processAgentsInBrowser = function() {
-
         if (Lifecycle.inPlay && window) {
             window.requestAnimationFrame(Lifecycle.processAgentsInBrowser);
             Lifecycle.processAgents();
