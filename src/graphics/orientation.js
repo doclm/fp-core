@@ -35,6 +35,7 @@ FiercePlanet.Orientation = FiercePlanet.Orientation || {};
     this.zoomWorld = 1, this.externalZoomWorld = 1, this.zoomMagnificationFactor = 1.5;
     this.rotationAngle = this.DEFAULT_ROTATION_ANGLE, this.perspectiveAngle = this.DEFAULT_PERSPECTIVE_ANGLE;
     this.mapRotationAngle = this.DEFAULT_MAP_ROTATION_ANGLE, this.mapPerspectiveAngle = this.DEFAULT_MAP_PERSPECTIVE_ANGLE;
+    this.fullScreenMode = false;
 
     
     this.reset = function() {
@@ -133,10 +134,14 @@ FiercePlanet.Orientation = FiercePlanet.Orientation || {};
      */
     this.makeFullScreen = function () {
         if (fullScreenApi.supportsFullScreen) {
-            if (fullScreenApi.isFullScreen())
+            if (fullScreenApi.isFullScreen()) {
                 fullScreenApi.cancelFullScreen();
-            else
+                this.fullScreenMode = false;
+            }
+            else {
                 fullScreenApi.requestFullScreen(document.getElementsByTagName('html')[0]);
+                this.fullScreenMode = true;
+            }
         }
         /*
         var sw = $("body").width();

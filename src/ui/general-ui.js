@@ -148,10 +148,12 @@ FiercePlanet.GeneralUI = FiercePlanet.GeneralUI || {};
         var posY = Math.floor(y / FiercePlanet.Orientation.cellHeight);
 
         // Adjust for full-screen mode
-        var sw = $("#baseCanvas").width();
-        var sh = $("#baseCanvas").height();
-        posX = Math.floor(posX / (sw / FiercePlanet.Orientation.worldWidth));
-        posY = Math.floor(posY / (sh / FiercePlanet.Orientation.worldHeight));
+        if (FiercePlanet.Orientation.fullScreenMode) {
+            var sw = $("#baseCanvas").width();
+            var sh = $("#baseCanvas").height();
+            posX = Math.floor(posX / (sw / FiercePlanet.Orientation.worldWidth));
+            posY = Math.floor(posY / (sh / FiercePlanet.Orientation.worldHeight));
+        }
 
         // Correct for tilt isometric view
         if (Universe.settings.isometricView || Lifecycle.currentWorld.isometricView) {
