@@ -175,12 +175,12 @@ StickFigure = function(_x, _y, _width, _height, _exaggerated) {
             mouthEndY = this.headY + Math.sin(Math.PI * mouthPos) * this.headRadius,
             mouthStartX = mouthEndX - (this.headRadius * mouthLen),
             mouthStartY = mouthEndY;
-        var bubbleCenterX = (this.headX / 2) + (this.headRadius * 3) + (textWidth / 2)
+        var bubbleCenterX = (this.headX / 2) + (this.headRadius * 3 * (this.direction == 1 ? -1 : 1)) + ((this.direction == 1 ? -1 : 1) * textWidth / 2)
             , bubbleCenterY = this.headY - (this.headRadius * 2)
             , bubbleRadius = 10 * (Math.pow(textWidth / 10, 0.75));
 
-        if (direction == 1) {
-            mouthEndX = this.headX - mouthEndX;
+        if (this.direction == 1) {
+            mouthEndX = this.headX;
         }
         // save state
         context.save();
@@ -193,11 +193,12 @@ StickFigure = function(_x, _y, _width, _height, _exaggerated) {
             , btnX = bubbleCenterX - Math.cos(btnAngle) * bubbleRadius
             , btnY = bubbleCenterY - Math.sin(btnAngle) * bubbleRadius;
         context.beginPath();
-        context.arc(bubbleCenterX, bubbleCenterY, bubbleRadius, Math.PI, Math.PI + btnAngle, false);
-        context.moveTo(bubbleCenterX - bubbleRadius, bubbleCenterY);
-        context.lineTo(mouthEndX / 2, mouthEndY);
-        context.moveTo(btnX, btnY);
-        context.lineTo(mouthEndX / 2, mouthEndY);
+        context.arc(bubbleCenterX, bubbleCenterY, bubbleRadius, 0, Math.PI  * 2, false);
+//        context.arc(bubbleCenterX, bubbleCenterY, bubbleRadius, Math.PI, Math.PI + btnAngle, false);
+//        context.moveTo(bubbleCenterX - bubbleRadius, bubbleCenterY);
+//        context.lineTo(mouthEndX, mouthEndY);
+//        context.moveTo(btnX, btnY);
+//        context.lineTo(mouthEndX, mouthEndY);
         context.closePath();
 
         context.textAlign = 'center';

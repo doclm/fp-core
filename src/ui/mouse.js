@@ -35,11 +35,14 @@ FiercePlanet.Mouse = FiercePlanet.Mouse || {};
         topMostCanvas.bind("contextmenu",function(e){
             return false;
         });
-        topMostCanvas.mousewheel(function(event, delta) {
-            FiercePlanet.Drawing.zoom(delta);
-            event.preventDefault();
-            return false; // prevent default
-        });
+        try{
+            topMostCanvas.mousewheel(function(event, delta) {
+                FiercePlanet.Drawing.zoom(delta);
+                event.preventDefault();
+                return false; // prevent default
+            });
+        }
+        catch (e) {}
     };
 
     /**

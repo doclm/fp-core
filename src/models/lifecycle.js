@@ -397,7 +397,7 @@ var Lifecycle = Lifecycle || {};
     this._initialiseGame = function () {
 		if (this.preInitialiseGameCallback)
 			this.preInitialiseGameCallback();
-			
+
         if (typeof console != "undefined")
             console.log("Initialising Universe...");
 
@@ -470,7 +470,6 @@ var Lifecycle = Lifecycle || {};
     };
 
     this.processAgentsInBrowser = function() {
-
         if (Lifecycle.inPlay && window) {
             window.requestAnimationFrame(Lifecycle.processAgentsInBrowser);
             Lifecycle.processAgents();

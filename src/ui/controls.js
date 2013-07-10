@@ -118,7 +118,10 @@ FiercePlanet.Controls = FiercePlanet.Controls || {};
 		  shadow: true // Whether to render a shadow
 		};
 //		var target = document.getElementById('foo');
-		FiercePlanet.Game.spinner = new Spinner(opts); //.spin(target);
+        try {
+            FiercePlanet.Game.spinner = new Spinner(opts); //.spin(target);
+        }
+        catch (e) {}
 
         $('#spinner')
 		    .hide()  // hide it initially

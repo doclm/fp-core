@@ -239,9 +239,9 @@ FiercePlanet.GeneralUI = FiercePlanet.GeneralUI || {};
             $('#world-parameters').html(world.parameters);
         }
         // Add buttons
-        $('#world-parameters').prepend('<button id="paramRestart">Restart</button>');
         $('#world-parameters').prepend('<button id="paramStep">Step</button>');
         $('#world-parameters').prepend('<button id="paramPausePlay">Pause / Play</button>');
+        $('#world-parameters').prepend('<button id="paramRestart">Restart</button>');
         $('button').button();
         $('#paramPausePlay').click(function() {
             FiercePlanet.Game.playGame();

@@ -297,8 +297,13 @@ FiercePlanet.GoogleMapUtils = FiercePlanet.GoogleMapUtils || {};
      * @param value
      */
     this.createMap = function(options, altCanvasName) {
-        if (typeof(google) == 'undefined' || typeof(google.maps) == 'undefined')
+        try {
+            if (typeof(google) == 'undefined' || typeof(google.maps) == 'undefined')
+                return;
+        }
+        catch (err) {
             return;
+        }
         var canvasName = altCanvasName || '#actual_map';
 
         // If the map needs rotation, rotate the underlying div
@@ -313,29 +318,32 @@ FiercePlanet.GoogleMapUtils = FiercePlanet.GoogleMapUtils || {};
 //        map = new google.maps.Map($(canvasName)[0], this.defaultOptions());
         map = new google.maps.Map($(canvasName)[0], options);
 
-        var trafficLayer = new google.maps.TrafficLayer();
-        trafficLayer.setMap(map);
-        var weatherLayer = new google.maps.weather.WeatherLayer({
-            temperatureUnits: google.maps.weather.TemperatureUnit.FAHRENHEIT
-        });
-        weatherLayer.setMap(map);
+        try {
+            var trafficLayer = new google.maps.TrafficLayer();
+            trafficLayer.setMap(map);
+            var weatherLayer = new google.maps.weather.WeatherLayer({
+                temperatureUnits: google.maps.weather.TemperatureUnit.FAHRENHEIT
+            });
+            weatherLayer.setMap(map);
 
-        var cloudLayer = new google.maps.weather.CloudLayer();
-        cloudLayer.setMap(map);
+            var cloudLayer = new google.maps.weather.CloudLayer();
+            cloudLayer.setMap(map);
 
-        // push the credit/copyright custom control
-        map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(creditNode);
+            // push the credit/copyright custom control
+            map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(creditNode);
 
-        // add the new map types to map.mapTypes
-        for (var key in mapTypes) {
-          map.mapTypes.set(key, new google.maps.ImageMapType(mapTypes[key]));
+            // add the new map types to map.mapTypes
+            for (var key in mapTypes) {
+                map.mapTypes.set(key, new google.maps.ImageMapType(mapTypes[key]));
+            }
+
+            // handle maptypeid_changed event to set the credit line
+            google.maps.event.addListener(map, 'maptypeid_changed', function() {
+                if (!_.isUndefined(map.getMapTypeId()))
+                    setCredit(mapTypes[map.getMapTypeId()].credit);
+            });
         }
-
-        // handle maptypeid_changed event to set the credit line
-        google.maps.event.addListener(map, 'maptypeid_changed', function() {
-            if (!_.isUndefined(map.getMapTypeId()))
-                setCredit(mapTypes[map.getMapTypeId()].credit);
-        });
+        catch (e) {}
         return map;
     };
 
@@ -345,8 +353,13 @@ FiercePlanet.GoogleMapUtils = FiercePlanet.GoogleMapUtils || {};
      */
     this.defaultOptions = function() {
         // If we can't reach the Google Maps API, return an empty object
-        if (typeof(google) == 'undefined' || typeof(google.maps) == 'undefined')
-            return mapOptions;
+        try {
+            if (typeof(google) == 'undefined' || typeof(google.maps) == 'undefined')
+                return {};
+        }
+        catch (err) {
+            return {};
+        }
 
       // push all mapType keys in to a mapTypeId array to set in the mapTypeControlOptions
         mapTypeIds = [
