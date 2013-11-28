@@ -5,10 +5,11 @@ var _ = require('underscore');
 require('./lib/fp-core');
 
 var fp = require('./lib/models/index');
-var Lifecycle = require('./lib/models/Lifecycle').Lifecycle;
-Lifecycle = fp.Lifecycle;
+var Lifecycle = fp.Lifecycle;
 var Module = fp.Module;
 var DefaultModule = require('./lib/default-module/default-module').DefaultModule;
+var Universe = require('./lib/models/universe').Universe;
+
 
 var a;
 if (_.isUndefined(a))
