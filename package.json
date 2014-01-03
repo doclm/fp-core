@@ -1,7 +1,7 @@
 {
   "name": "fp-core",
   "description": "Fierce Planet is a simple game for learning about sustainability",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "repository": {
     "type": "git",
     "url": "git://github.com/liammagee/fp-core.git"
